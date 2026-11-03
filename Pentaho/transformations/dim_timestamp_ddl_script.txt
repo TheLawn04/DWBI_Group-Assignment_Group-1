@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `dim_timestamp` (
+    `timestamp_key` INT NOT NULL,
+    `full_timestamp` TIMESTAMP NULL,
+    `date_value` DATE NOT NULL,
+    `year` INT NOT NULL,
+    `quarter` VARCHAR(2) NOT NULL,
+    `year_quarter` VARCHAR(7) NOT NULL,
+    `month` INT NOT NULL,
+    `day` INT NOT NULL,
+    `is_weekend` BOOLEAN NOT NULL,
+    PRIMARY KEY (`timestamp_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

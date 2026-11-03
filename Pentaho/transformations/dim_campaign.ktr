@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Transformation 1</name>
+    <name>dim_campaign</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -561,6 +561,16 @@
     </hop>
     <hop>
       <from>rearange accordiing voucher ID</from>
+      <to>Append streams</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate non_promo record</from>
+      <to>Append streams</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Append streams</from>
       <to>dim_campaign output</to>
       <enabled>Y</enabled>
     </hop>
@@ -893,6 +903,98 @@
     </GUI>
   </step>
   <step>
+    <name>dim_campaign output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dim_marketing_connection</connection>
+    <schema/>
+    <table>dim_campaign</table>
+    <commit>20</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>voucher_id</column_name>
+        <stream_name>voucher_id</stream_name>
+      </field>
+      <field>
+        <column_name>campaign_code</column_name>
+        <stream_name>campaign_code</stream_name>
+      </field>
+      <field>
+        <column_name>campaign_name</column_name>
+        <stream_name>campaign_name</stream_name>
+      </field>
+      <field>
+        <column_name>campaign_type</column_name>
+        <stream_name>campaign_type</stream_name>
+      </field>
+      <field>
+        <column_name>campaign_scope</column_name>
+        <stream_name>campaign_scope</stream_name>
+      </field>
+      <field>
+        <column_name>target_discount_pct</column_name>
+        <stream_name>target_discount_pct</stream_name>
+      </field>
+      <field>
+        <column_name>discount_value</column_name>
+        <stream_name>discount_value</stream_name>
+      </field>
+      <field>
+        <column_name>min_purchase</column_name>
+        <stream_name>min_purchase</stream_name>
+      </field>
+      <field>
+        <column_name>quota</column_name>
+        <stream_name>quota</stream_name>
+      </field>
+      <field>
+        <column_name>start_date</column_name>
+        <stream_name>start_date</stream_name>
+      </field>
+      <field>
+        <column_name>end_date</column_name>
+        <stream_name>end_date</stream_name>
+      </field>
+      <field>
+        <column_name>pic</column_name>
+        <stream_name>pic</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>2224</xloc>
+      <yloc>464</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>discount percent validation</name>
     <type>Validator</type>
     <description/>
@@ -1155,7 +1257,7 @@
     <enclosure>"</enclosure>
     <header>Y</header>
     <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
+    <lazy_conversion>N</lazy_conversion>
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
@@ -1266,6 +1368,48 @@
     </GUI>
   </step>
   <step>
+    <name>rearange accordiing voucher ID</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>voucher_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1840</xloc>
+      <yloc>464</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>remove redunancy and renaming</name>
     <type>SelectValues</type>
     <description/>
@@ -1279,7 +1423,6 @@
     <fields>
       <field>
         <name>voucher_id</name>
-        <rename/>
       </field>
       <field>
         <name>kode_promo</name>
@@ -1303,15 +1446,12 @@
       </field>
       <field>
         <name>discount_value</name>
-        <rename/>
       </field>
       <field>
         <name>min_purchase</name>
-        <rename/>
       </field>
       <field>
         <name>quota</name>
-        <rename/>
       </field>
       <field>
         <name>tgl_mulai</name>
@@ -1323,7 +1463,6 @@
       </field>
       <field>
         <name>pic</name>
-        <rename/>
       </field>
       <select_unspecified>Y</select_unspecified>
       <remove>
@@ -1718,8 +1857,8 @@
     </GUI>
   </step>
   <step>
-    <name>rearange accordiing voucher ID</name>
-    <type>SortRows</type>
+    <name>Generate non_promo record</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1728,23 +1867,157 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
     <fields>
       <field>
         <name>voucher_id</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>campaign_code</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>NO_PROMO</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>campaign_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>TanpaPromo</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>campaign_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>NONE</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>campaign_scope</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>semua kanal</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>target_discount_pct</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>15</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>discount_value</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>10</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>min_purchase</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>quota</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>start_date</name>
+        <type>Date</type>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>1980-01-01 00:00:00</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>end_date</name>
+        <type>Date</type>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>2037-12-31 23:59:59</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>pic</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>System</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1754,14 +2027,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1840</xloc>
-      <yloc>464</yloc>
+      <xloc>2048</xloc>
+      <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>dim_campaign output</name>
-    <type>TableOutput</type>
+    <name>Append streams</name>
+    <type>Append</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1770,73 +2043,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>dim_marketing_connection</connection>
-    <schema/>
-    <table>dim_campaign</table>
-    <commit>20</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>voucher_id</column_name>
-        <stream_name>voucher_id</stream_name>
-      </field>
-      <field>
-        <column_name>campaign_code</column_name>
-        <stream_name>campaign_code</stream_name>
-      </field>
-      <field>
-        <column_name>campaign_name</column_name>
-        <stream_name>campaign_name</stream_name>
-      </field>
-      <field>
-        <column_name>campaign_type</column_name>
-        <stream_name>campaign_type</stream_name>
-      </field>
-      <field>
-        <column_name>campaign_scope</column_name>
-        <stream_name>campaign_scope</stream_name>
-      </field>
-      <field>
-        <column_name>target_discount_pct</column_name>
-        <stream_name>target_discount_pct</stream_name>
-      </field>
-      <field>
-        <column_name>discount_value</column_name>
-        <stream_name>discount_value</stream_name>
-      </field>
-      <field>
-        <column_name>min_purchase</column_name>
-        <stream_name>min_purchase</stream_name>
-      </field>
-      <field>
-        <column_name>quota</column_name>
-        <stream_name>quota</stream_name>
-      </field>
-      <field>
-        <column_name>start_date</column_name>
-        <stream_name>start_date</stream_name>
-      </field>
-      <field>
-        <column_name>end_date</column_name>
-        <stream_name>end_date</stream_name>
-      </field>
-      <field>
-        <column_name>pic</column_name>
-        <stream_name>pic</stream_name>
-      </field>
-    </fields>
+    <head_name>rearange accordiing voucher ID</head_name>
+    <tail_name>Generate non_promo record</tail_name>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1846,7 +2054,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>2096</xloc>
+      <xloc>2048</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
