@@ -1,0 +1,13 @@
+REATE TABLE IF NOT EXISTS `map_product` (
+    `map_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `product_id` INT(11) DEFAULT NULL,
+    `sku` VARCHAR(50) COLLATE utf8mb4_general_ci NOT NULL,
+    `product_name` VARCHAR(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `category` VARCHAR(1000) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `sub_category` VARCHAR(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `material_no` VARCHAR(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `barcode` VARCHAR(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    PRIMARY KEY (`map_id`),
+    UNIQUE KEY `uk_sku` (`sku`),
+    INDEX `idx_material_no` (`material_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
