@@ -436,69 +436,6 @@
   <notepads>
   </notepads>
   <connection>
-    <name>nusantara_store_star_scheme</name>
-    <server>localhost</server>
-    <type>MYSQL</type>
-    <access>Native</access>
-    <database>dwbs_nrg</database>
-    <port>3308</port>
-    <username>root</username>
-    <password>Encrypted </password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
-        <attribute>500</attribute>
-      </attribute>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
-        <attribute>true</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>3308</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>STREAM_RESULTS</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>tgt_dw</name>
     <server>localhost</server>
     <type>MYSQL</type>
@@ -599,12 +536,12 @@
     </hop>
     <hop>
       <from>Filter rows</from>
-      <to>Insert / update</to>
+      <to>Dimension lookup/update</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Data grid</from>
-      <to>Insert / update</to>
+      <to>Dimension lookup/update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -914,6 +851,92 @@
     <GUI>
       <xloc>992</xloc>
       <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dimension lookup/update</name>
+    <type>DimensionLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <schema/>
+    <table>dim_channel</table>
+    <connection>tgt_dw</connection>
+    <commit>100</commit>
+    <update>Y</update>
+    <fields>
+      <key>
+        <name>channel_code</name>
+        <lookup>channel_code</lookup>
+      </key>
+      <key>
+        <name>source_system</name>
+        <lookup>source_system</lookup>
+      </key>
+      <date>
+        <name/>
+        <from>date_from</from>
+        <to>date_to</to>
+      </date>
+      <field>
+        <name>channel_name</name>
+        <lookup>channel_name</lookup>
+        <update>Punch through</update>
+      </field>
+      <field>
+        <name>province</name>
+        <lookup>province</lookup>
+        <update>Punch through</update>
+      </field>
+      <field>
+        <name>store_format</name>
+        <lookup>store_format</lookup>
+        <update>Punch through</update>
+      </field>
+      <field>
+        <name>city_std</name>
+        <lookup>city_std</lookup>
+        <update>Punch through</update>
+      </field>
+      <field>
+        <name>channel_type</name>
+        <lookup>channel_type</lookup>
+        <update>Punch through</update>
+      </field>
+      <return>
+        <name/>
+        <rename/>
+        <creation_method>tablemax</creation_method>
+        <use_autoinc>N</use_autoinc>
+        <version>version</version>
+      </return>
+    </fields>
+    <sequence/>
+    <min_year>1900</min_year>
+    <max_year>2199</max_year>
+    <cache_size>5000</cache_size>
+    <preload_cache>N</preload_cache>
+    <use_start_date_alternative>N</use_start_date_alternative>
+    <start_date_alternative>none</start_date_alternative>
+    <start_date_field_name/>
+    <useBatch>N</useBatch>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1088</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1297,85 +1320,6 @@ FROM nrg_dw.std_city_ref</sql>
     <GUI>
       <xloc>336</xloc>
       <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>nusantara_store_star_scheme</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>dim_channel</table>
-      <key>
-        <name>channel_code</name>
-        <field>channel_code</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>source_system</name>
-        <field>source_system</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>channel_code</name>
-        <rename>channel_code</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>channel_name</name>
-        <rename>channel_name</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>channel_type</name>
-        <rename>channel_type</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>store_format</name>
-        <rename>store_format</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>province</name>
-        <rename>province</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>city_std</name>
-        <rename>city_std</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>source_system</name>
-        <rename>source_system</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1120</xloc>
-      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
