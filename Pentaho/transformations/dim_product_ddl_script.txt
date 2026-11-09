@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS `dim_product` (
+    `product_key` INT(11) NOT NULL AUTO_INCREMENT,
+    `material_no` VARCHAR(20) COLLATE utf8mb4_general_ci NOT NULL,
+    `product_name` VARCHAR(100) COLLATE utf8mb4_general_ci NOT NULL,
+    `category` VARCHAR(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `sub_category` VARCHAR(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `brand` VARCHAR(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `base_price` DECIMAL(12,2) DEFAULT NULL,
+    `status` VARCHAR(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `available_since` DATE DEFAULT NULL,
+    `supplier_name` VARCHAR(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `supplier_homecity` VARCHAR(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `supplier_contact` VARCHAR(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    PRIMARY KEY (`product_key`),
+    UNIQUE KEY `uk_material_no` (`material_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

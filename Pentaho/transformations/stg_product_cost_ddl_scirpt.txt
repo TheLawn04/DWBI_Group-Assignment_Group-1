@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS `stg_product_cost` (
+    `cost_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `material_no` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `product_name` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `brand` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `category` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `sub_category` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `base_price` DECIMAL(12,2) NOT NULL,
+    `supplier` VARCHAR(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `status` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `available_since` DATE NOT NULL,
+    PRIMARY KEY (`cost_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
