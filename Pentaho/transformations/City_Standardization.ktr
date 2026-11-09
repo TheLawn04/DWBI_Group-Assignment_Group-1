@@ -430,18 +430,18 @@
     <created_date>2026/10/19 18:55:19.044</created_date>
     <modified_user>-</modified_user>
     <modified_date>2026/10/19 18:55:19.044</modified_date>
-    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>tgt_dw</name>
+    <name>nusantra_store_star_scheme</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>nrg_dw</database>
-    <port>3306</port>
+    <database>dwbs_nrg</database>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -470,7 +470,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -531,7 +531,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}/ref_kota.csv</filename>
+    <filename>${DATA_DIR}Dataset\ref_kota.csv </filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -689,7 +689,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>tgt_dw</connection>
+    <connection>nusantra_store_star_scheme</connection>
     <schema/>
     <table>std_city_ref</table>
     <commit>1000</commit>
