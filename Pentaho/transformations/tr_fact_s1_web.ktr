@@ -793,27 +793,20 @@
     <connection>star_scheme_nusantara_db</connection>
     <rowlimit>0</rowlimit>
     <sql>SELECT COALESCE(
-  (SELECT campaign_key FROM dim_campaign
-   WHERE campaign_code &lt;&gt; 'NO_PROMO'
-     AND DATE(?) BETWEEN DATE(start_date) AND DATE(end_date)
-     AND target_discount_pct = ?
-     AND campaign_scope IN (?, 'Semua Kanal')
-   ORDER BY (campaign_scope = 'Semua Kanal'), start_date DESC LIMIT 1),
-  (SELECT campaign_key FROM dim_campaign WHERE campaign_code = 'NO_PROMO' LIMIT 1)
+    (SELECT campaign_key 
+FROM dim_campaign 
+WHERE voucher_id = ? 
+AND voucher_id > 0 LIMIT 1),
+    (SELECT campaign_key 
+FROM dim_campaign 
+WHERE campaign_code = 'NO_PROMO' 
+LIMIT 1)
 ) AS campaign_key</sql>
     <outer_join>N</outer_join>
     <replace_vars>N</replace_vars>
     <parameter>
       <field>
         <name>voucher_id</name>
-        <type>None</type>
-      </field>
-      <field>
-        <name>order_ts</name>
-        <type>None</type>
-      </field>
-      <field>
-        <name>scope_name</name>
         <type>None</type>
       </field>
     </parameter>
@@ -916,7 +909,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
+      <xloc>336</xloc>
       <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1608,7 +1601,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
+      <xloc>176</xloc>
       <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>

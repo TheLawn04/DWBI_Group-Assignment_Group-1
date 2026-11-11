@@ -436,12 +436,12 @@
   <notepads>
   </notepads>
   <connection>
-    <name>tgt_dw</name>
+    <name>nsuantara_store_star_schema</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>nrg_dw</database>
-    <port>3306</port>
+    <database>dwbs_nrg</database>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -470,7 +470,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -682,7 +682,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>tgt_dw</connection>
+    <connection>nsuantara_store_star_schema</connection>
     <schema/>
     <table>dim_timestamp</table>
     <commit>1000</commit>

@@ -531,7 +531,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}Dataset\ref_kota.csv </filename>
+    <filename>${Internal.Entry.Current.Directory}/../../Dataset/ref_kota.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

@@ -436,7 +436,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>stg_product connection</name>
+    <name>nusantara_store_star_schema</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
@@ -521,7 +521,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}/S2_POS_TOKO/store_master.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/../../Dataset/S4_ERP_MASTER/produk_master.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -759,7 +759,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>stg_product connection</connection>
+    <connection>nusantara_store_star_schema</connection>
     <schema/>
     <table>stg_product_cost</table>
     <commit>1000</commit>

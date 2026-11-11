@@ -901,7 +901,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1328</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -955,7 +955,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
+      <xloc>1168</xloc>
       <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1129,7 +1129,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1328</xloc>
       <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1173,7 +1173,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
     <length>Characters</length>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>${DATA_DIR}/S2_POS_TOKO</name>
+      <name>${Internal.Entry.Current.Directory}/../../Dataset/S2_POS_TOKO</name>
       <filemask>trx_header_TS.*.csv</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -1740,7 +1740,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
     <length>Characters</length>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>${DATA_DIR}/S2_POS_TOKO</name>
+      <name>${Internal.Entry.Current.Directory}/../../Dataset/S2_POS_TOKO</name>
       <filemask>trx_line_TS.*.csv</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>

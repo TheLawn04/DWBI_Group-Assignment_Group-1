@@ -1,0 +1,12 @@
+kode_promo;nama_kampanye;jenis_promo;kanal;tgl_mulai;tgl_selesai;target_diskon_persen;pic;nr_errors;error_desc;error_fields
+GAJIAN25  ;Promo Gajian                ;Cashback;Toko Fisik ;28-06-2022;19-07-2022;sepuluh        ;Halima  ;1;
+
+Unexpected conversion error while converting value [target_diskon_persen String(15)] to an Integer
+
+target_diskon_persen String(15) : couldn't convert String to Integer
+
+target_diskon_persen String(15) : couldn't convert String to number : non-numeric character found at position 1 for value [sepuluh]
+
+
+
+;target_diskon_persen
