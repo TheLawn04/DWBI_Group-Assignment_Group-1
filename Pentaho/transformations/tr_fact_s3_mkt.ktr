@@ -804,10 +804,16 @@
     </partitioning>
     <connection>nusantara_store_star_scheme</connection>
     <rowlimit>0</rowlimit>
-    <sql>SELECT base_price AS unit_cost FROM stg_product_cost
-WHERE material_no = ? AND available_since &lt;= DATE(?)
-ORDER BY available_since DESC LIMIT 1</sql>
-    <outer_join>N</outer_join>
+    <sql>SELECT COALESCE(
+    (SELECT base_price FROM stg_product_cost 
+     WHERE material_no = ? AND available_since &lt;= DATE(?) 
+     ORDER BY available_since DESC LIMIT 1),
+    (SELECT base_price FROM stg_product_cost 
+     WHERE material_no = ? 
+     ORDER BY available_since ASC LIMIT 1),
+    0.00
+) AS unit_cost</sql>
+    <outer_join>Y</outer_join>
     <replace_vars>N</replace_vars>
     <parameter>
       <field>
@@ -816,6 +822,10 @@ ORDER BY available_since DESC LIMIT 1</sql>
       </field>
       <field>
         <name>paid_wib</name>
+        <type>None</type>
+      </field>
+      <field>
+        <name>material_no</name>
         <type>None</type>
       </field>
     </parameter>
@@ -1111,7 +1121,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
     <formula>
       <field_name>timestamp_key</field_name>
       <formula_string>YEAR([paid_wib])*10000+MONTH([paid_wib])*100+DAY([paid_wib])</formula_string>
-      <value_type>Date</value_type>
+      <value_type>Integer</value_type>
       <value_length>-1</value_length>
       <value_precision>-1</value_precision>
       <replace_field/>
@@ -1154,7 +1164,7 @@ ORDER BY available_since DESC LIMIT 1</sql>
     <includeNulls>N</includeNulls>
     <rownum_field/>
     <file>
-      <name>${DATA_DIR}/S3_MPL_API</name>
+      <name>${Internal.Entry.Current.Directory}/../../Dataset/S3_MPL_API</name>
       <filemask>mpl_pull_page_.*.json</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -1458,8 +1468,30 @@ ORDER BY available_since DESC LIMIT 1</sql>
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>// Parse the ISO string natively and add 7 hours for WIB (UTC+7)
-var paid_wib = new Date(new Date(paid_at).getTime() + 7 * 60 * 60 * 1000);</jsScript_script>
+        <jsScript_script>var paid_wib = null;
+
+if (paid_at != null &amp;&amp; trim(paid_at) != "") {
+    var raw_str = trim(paid_at);
+    try {
+        
+        var instant = java.time.Instant.parse(raw_str);
+        
+       
+        var wib_instant = instant.plusSeconds(7 * 3600);
+        
+       
+        paid_wib = java.util.Date.from(wib_instant);
+    } catch (e) {
+        try {
+            
+            var sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            var parsed_date = sdf.parse(raw_str);
+            paid_wib = new java.util.Date(parsed_date.getTime() + (7 * 3600 * 1000));
+        } catch (err) {
+            paid_wib = null;
+        }
+    }
+}</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>

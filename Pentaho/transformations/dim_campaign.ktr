@@ -436,12 +436,12 @@
   <notepads>
   </notepads>
   <connection>
-    <name>src_ecom</name>
+    <name>ecom_nrg_connect</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
     <database>nrg_ecom</database>
-    <port>3306</port>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -470,7 +470,70 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>nsuantara_store_star_schema</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>dwbs_nrg</database>
+    <port>3308</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
+      </attribute>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -605,7 +668,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${OUT_DIR}/error_log_s5.txt</name>
+      <name>${Internal.Entry.Current.Directory}/../../output</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>txt</extention>
@@ -1213,7 +1276,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>src_ecom</connection>
+    <connection>nsuantara_store_star_schema</connection>
     <schema/>
     <table>dim_campaign</table>
     <commit>20</commit>
@@ -1493,7 +1556,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}/S5_MKT_SHEET/kampanye_marketing.csv </filename>
+    <filename>${Internal.Entry.Current.Directory}/../../Dataset/S5_MKT_SHEET/kampanye_marketing.csv </filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1747,7 +1810,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>src_ecom</connection>
+    <connection>ecom_nrg_connect</connection>
     <sql>SELECT * FROM vouchers</sql>
     <limit>0</limit>
     <lookup/>

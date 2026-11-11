@@ -436,12 +436,12 @@
   <notepads>
   </notepads>
   <connection>
-    <name>tgt_dw</name>
+    <name>nusantara_store_star_schema</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>nrg_dw</database>
-    <port>3306</port>
+    <database>dwbs_nrg</database>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -470,7 +470,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -500,7 +500,7 @@
   </connection>
   <order>
     <hop>
-      <from>CSV file input</from>
+      <from>store master input</from>
       <to>String operations</to>
       <enabled>Y</enabled>
     </hop>
@@ -536,12 +536,12 @@
     </hop>
     <hop>
       <from>Filter rows</from>
-      <to>Dimension lookup/update</to>
+      <to>dim channel output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Data grid</from>
-      <to>Dimension lookup/update</to>
+      <to>dim channel output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -597,7 +597,7 @@
     </GUI>
   </step>
   <step>
-    <name>CSV file input</name>
+    <name>store master input</name>
     <type>CsvInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -607,7 +607,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}/S2_POS_TOKO/store_master.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/../../Dataset/S2_POS_TOKO/store_master.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -851,92 +851,6 @@
     <GUI>
       <xloc>992</xloc>
       <yloc>432</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dimension lookup/update</name>
-    <type>DimensionLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <schema/>
-    <table>dim_channel</table>
-    <connection>tgt_dw</connection>
-    <commit>100</commit>
-    <update>Y</update>
-    <fields>
-      <key>
-        <name>channel_code</name>
-        <lookup>channel_code</lookup>
-      </key>
-      <key>
-        <name>source_system</name>
-        <lookup>source_system</lookup>
-      </key>
-      <date>
-        <name/>
-        <from>date_from</from>
-        <to>date_to</to>
-      </date>
-      <field>
-        <name>channel_name</name>
-        <lookup>channel_name</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>province</name>
-        <lookup>province</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>store_format</name>
-        <lookup>store_format</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>city_std</name>
-        <lookup>city_std</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>channel_type</name>
-        <lookup>channel_type</lookup>
-        <update>Punch through</update>
-      </field>
-      <return>
-        <name/>
-        <rename/>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-        <version>version</version>
-      </return>
-    </fields>
-    <sequence/>
-    <min_year>1900</min_year>
-    <max_year>2199</max_year>
-    <cache_size>5000</cache_size>
-    <preload_cache>N</preload_cache>
-    <use_start_date_alternative>N</use_start_date_alternative>
-    <start_date_alternative>none</start_date_alternative>
-    <start_date_field_name/>
-    <useBatch>N</useBatch>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1088</xloc>
-      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1250,11 +1164,11 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>tgt_dw</connection>
+    <connection>nusantara_store_star_schema</connection>
     <sql>SELECT
   city_std
 , city_alias
-FROM nrg_dw.std_city_ref</sql>
+FROM std_city_ref</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1320,6 +1234,85 @@ FROM nrg_dw.std_city_ref</sql>
     <GUI>
       <xloc>336</xloc>
       <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>dim channel output</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>nusantara_store_star_schema</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dim_channel</table>
+      <key>
+        <name>channel_code</name>
+        <field>channel_code</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>source_system</name>
+        <field>source_system</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>channel_code</name>
+        <rename>channel_code</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>channel_name</name>
+        <rename>channel_name</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>province</name>
+        <rename>province</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>store_format</name>
+        <rename>store_format</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>city_std</name>
+        <rename>city_std</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>source_system</name>
+        <rename>source_system</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>channel_type</name>
+        <rename>channel_type</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

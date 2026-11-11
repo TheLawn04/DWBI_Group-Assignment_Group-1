@@ -504,7 +504,7 @@
     <type>MYSQL</type>
     <access>Native</access>
     <database>nrg_ecom</database>
-    <port>3306</port>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -533,7 +533,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -1055,7 +1055,7 @@
         <name>product_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>product_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1068,8 +1068,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1078,7 +1078,7 @@
         <name>sku</name>
         <length>40</length>
         <precision>-1</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>sku</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1091,8 +1091,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1101,7 +1101,7 @@
         <name>category_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>category_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1114,8 +1114,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1124,7 +1124,7 @@
         <name>product_name</name>
         <length>150</length>
         <precision>-1</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>product_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1137,8 +1137,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1147,7 +1147,7 @@
         <name>brand</name>
         <length>60</length>
         <precision>-1</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>brand</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1160,8 +1160,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1170,7 +1170,7 @@
         <name>base_price</name>
         <length>15</length>
         <precision>2</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>base_price</comments>
         <conversion_Mask>####0.0#########;-####0.0#########</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1183,8 +1183,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1193,7 +1193,7 @@
         <name>is_active</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>Table input 2</origin>
+        <origin>product input</origin>
         <comments>is_active</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1206,8 +1206,8 @@
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Asia/Jakarta</date_format_timezone>
+        <date_format_locale>en_AU</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -1236,7 +1236,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${DATA_DIR}/S2_POS_TOKO/product_master_local.csv</filename>
+    <filename>${Internal.Entry.Current.Directory}/../../Dataset/S2_POS_TOKO/product_master_local.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

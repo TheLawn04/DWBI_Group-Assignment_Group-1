@@ -430,18 +430,18 @@
     <created_date>2026/11/03 21:24:33.000</created_date>
     <modified_user>-</modified_user>
     <modified_date>2026/11/03 21:24:33.000</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>nrg_dw</name>
+    <name>nusantara_store_star_schema</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>nrg_dw</database>
-    <port>3306</port>
+    <database>dwbs_nrg</database>
+    <port>3308</port>
     <username>root</username>
     <password>Encrypted </password>
     <servername/>
@@ -470,7 +470,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>3308</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -541,6 +541,139 @@
     </hop>
   </order>
   <step>
+    <name>Add constants</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>customer_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>MKT_BUYER</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>624</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Calculator</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>city</field_name>
+      <calc_type>NVL</calc_type>
+      <field_a>city_std</field_a>
+      <field_b>city.raw</field_b>
+      <field_c/>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>544</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>nusantara_store_star_schema</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <key>
+        <name>buyer_hash</name>
+        <field>buyer_hash</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>buyer_hash</name>
+        <rename>buyer_hash</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>customer_type</name>
+        <rename>customer_type</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>city</name>
+        <rename>city</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>688</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>JSON input</name>
     <type>JsonInput</type>
     <description/>
@@ -564,7 +697,7 @@
     <includeNulls>N</includeNulls>
     <rownum_field/>
     <file>
-      <name>C:\Users\Lenovo\Documents\GitHub\DWBI_Group-Assignment_Group-1\Dataset\S3_MPL_API</name>
+      <name>${Internal.Entry.Current.Directory}/../../Dataset/S3_MPL_API</name>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -688,8 +821,8 @@
     </GUI>
   </step>
   <step>
-    <name>Unique rows</name>
-    <type>Unique</type>
+    <name>Stream lookup</name>
+    <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -698,16 +831,23 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <count_rows>N</count_rows>
-    <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>buyer_hash</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
+    <from>Table input</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>city_key</name>
+        <field>city_alias</field>
+      </key>
+      <value>
+        <name>city_std</name>
+        <rename>city_std</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -717,7 +857,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
+      <xloc>464</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
@@ -773,11 +913,11 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>nrg_dw</connection>
+    <connection>nusantara_store_star_schema</connection>
     <sql>SELECT
   city_std
 , city_alias
-FROM nrg_dw.std_city_ref
+FROM std_city_ref
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -790,7 +930,7 @@ FROM nrg_dw.std_city_ref
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>city_std</name>
-        <length>15</length>
+        <length>50</length>
         <precision>-1</precision>
         <origin>Table input</origin>
         <comments>city_std</comments>
@@ -805,7 +945,7 @@ FROM nrg_dw.std_city_ref
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_ID</date_format_locale>
+        <date_format_locale>en_AU</date_format_locale>
         <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -813,7 +953,7 @@ FROM nrg_dw.std_city_ref
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>city_alias</name>
-        <length>15</length>
+        <length>50</length>
         <precision>-1</precision>
         <origin>Table input</origin>
         <comments>city_alias</comments>
@@ -828,7 +968,7 @@ FROM nrg_dw.std_city_ref
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_ID</date_format_locale>
+        <date_format_locale>en_AU</date_format_locale>
         <date_format_timezone>Asia/Bangkok</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -848,8 +988,8 @@ FROM nrg_dw.std_city_ref
     </GUI>
   </step>
   <step>
-    <name>Stream lookup</name>
-    <type>StreamLookup</type>
+    <name>Unique rows</name>
+    <type>Unique</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -858,101 +998,14 @@ FROM nrg_dw.std_city_ref
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Table input</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>city_key</name>
-        <field>city_alias</field>
-      </key>
-      <value>
-        <name>city_std</name>
-        <rename>city_std</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calculator</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>city</field_name>
-      <calc_type>NVL</calc_type>
-      <field_a>city_std</field_a>
-      <field_b>city.raw</field_b>
-      <field_c/>
-      <value_type>String</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>544</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
     <fields>
       <field>
-        <name>customer_type</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>MKT_BUYER</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <name>buyer_hash</name>
+        <case_insensitive>N</case_insensitive>
       </field>
     </fields>
     <attributes/>
@@ -964,60 +1017,7 @@ FROM nrg_dw.std_city_ref
       </output>
     </remotesteps>
     <GUI>
-      <xloc>624</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>nrg_dw</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>nrg_dw</schema>
-      <table>dim_customer</table>
-      <key>
-        <name>buyer_hash</name>
-        <field>mpl_buyer_hash</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>mpl_buyer_hash</name>
-        <rename>buyer_hash</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>customer_type</name>
-        <rename>customer_type</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>city</name>
-        <rename>city</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
+      <xloc>288</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
