@@ -1,0 +1,15 @@
+CREATE TABLE `dim_channel` (
+  `channel_key` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_code` varchar(20) NOT NULL,
+  `channel_name` varchar(100) NOT NULL,
+  `channel_type` varchar(50) NOT NULL,
+  `store_format` varchar(50) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city_std` varchar(50) DEFAULT NULL,
+  `source_system` varchar(10) NOT NULL,
+  PRIMARY KEY (`channel_key`),
+  UNIQUE KEY `uk_channel_code` (`channel_code`),
+  KEY `idx_channel_type` (`channel_type`),
+  KEY `idx_channel_city` (`city_std`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+Query results operations

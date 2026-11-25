@@ -1,0 +1,5 @@
+CREATE TABLE `std_city_ref` (
+  `city_alias` varchar(50) NOT NULL,
+  `city_std` varchar(50) NOT NULL,
+  PRIMARY KEY (`city_alias`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
