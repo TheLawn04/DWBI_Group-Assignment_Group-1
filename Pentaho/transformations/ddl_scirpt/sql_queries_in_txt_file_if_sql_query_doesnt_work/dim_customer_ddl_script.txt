@@ -1,0 +1,15 @@
+CREATE TABLE `dim_customer` (
+  `customer_key` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` varchar(50) DEFAULT NULL,
+  `customer_name` varchar(150) DEFAULT NULL,
+  `member_id` varchar(50) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `buyer_hash` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `customer_type` varchar(30) NOT NULL DEFAULT 'UNKNOWN',
+  `is_web_member_match` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`customer_key`),
+  KEY `idx_cust_customer_id` (`customer_id`),
+  KEY `idx_cust_member_id` (`member_id`),
+  KEY `idx_cust_buyer_hash` (`buyer_hash`)
+) ENGINE=InnoDB AUTO_INCREMENT=1557 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
