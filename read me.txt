@@ -1,0 +1,7 @@
+For clarification purposes: 
+
+ou ETL transfirmation via pentahoo are insde the "pentaho folder" and not the "output" folder. 
+Aswell, the SQL query to both make all of te nssecray table and refrence table, along with the sql query to perfom the 
+analysis regaidng teh 4 questions are isnide the pentaho folder, withn the "ddl script" folder. and for the databse ceration istelf, sir 
+dont nee dto cerate the databse manaully , as the sql query for the table making has alreayd line of code that will make the databse istelf 
+(the databse name is "dwbs_nrg")
